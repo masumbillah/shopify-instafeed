@@ -8,6 +8,7 @@ const { verifyRequest } = require('@shopify/koa-shopify-auth');
 const session = require('koa-session');
 const koaBody = require('koa-body')
 const jsonBigint = require('json-bigint');
+const mongoose = require('mongoose');
 
 dotenv.config();
 const { default: graphQLProxy } = require('@shopify/koa-shopify-graphql-proxy');
@@ -134,6 +135,17 @@ router.get('/api/instagram-media', async (ctx, req, res) => {
 server.use(router.allowedMethods());
 server.use(router.routes());
 
+//Connect mongodb
+mongoose.connect(
+  'mongodb://localhost/shopify_db',
+  { 
+    useUnifiedTopology: true,
+    useNewUrlParser: true 
+  }
+)
+.then(() => console.log('DB Connected!'))
+.catch(err => console.log( "Error:", err.message));
+
 app.prepare().then(() => {
   
   server.use(session(server));
@@ -166,8 +178,6 @@ app.prepare().then(() => {
 
   server.use(graphQLProxy({ version: ApiVersion.October19 }))
   server.use(verifyRequest());
-
-  
 
   server.use(async (ctx) => {
     await handle(ctx.req, ctx.res);
