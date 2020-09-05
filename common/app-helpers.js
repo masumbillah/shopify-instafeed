@@ -2,7 +2,7 @@ let AppHelpers = {};
 
 AppHelpers.baseUrl = () => {
 
-    const appUrl = "https://9952f26eae2a.ngrok.io";
+    const appUrl = "https://3c3b313982a0.ngrok.io";
     return appUrl? appUrl:"localhost:3000";
     
 };

@@ -1,8 +1,15 @@
-const KoaRouter = require('koa-router');
-const router = new KoaRouter();
-import StoresHelpers from "../models/stores/stores-helpers"
+const dotenv = require('dotenv');
+const InstafeedsHelpers = require("../models/instafeeds/instafeeds-helpers");
 
-router.get('/index-token', async (ctx, res) => {
+dotenv.config();
+
+const { HOST } = process.env;
+
+const Routers = (router) => {
+
+  let instagramMediaList = [];
+
+  router.get('/index-token', async (ctx, res) => {
     let instance = this;
 
     try {
@@ -18,11 +25,9 @@ router.get('/index-token', async (ctx, res) => {
   router.get('/index-token-callback', async (ctx, res) => {
     let instance = this;
     try {
-      let userCode = StoresHelpers.getUserCode(ctx),
-          accessTokenData = await StoresHelpers.getInstagramAccessToken(userCode),
-          mediaList = await StoresHelpers.getInstagramMedia(accessTokenData);
-      
-      console.log("mediaList", mediaList);
+      let userCode = InstafeedsHelpers.getUserCode(ctx),
+          accessTokenData = await InstafeedsHelpers.getInstagramAccessToken(userCode),
+          mediaList = await InstafeedsHelpers.getInstagramMedia(accessTokenData);
   
       let isFound = instagramUsers.find(element => element.id === userInfo.id);
 
@@ -60,3 +65,7 @@ router.get('/index-token', async (ctx, res) => {
       console.log(error)
     }
   });
+
+};
+
+module.exports = Routers;

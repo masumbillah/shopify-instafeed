@@ -1,10 +1,8 @@
 const dotenv = require('dotenv');
+const jsonBigint = require('json-bigint');
 dotenv.config();
 
 const { 
-    SHOPIFY_API_SECRET_KEY, 
-    SHOPIFY_API_KEY, 
-    PORT,
     HOST,
     INSTAGRAM_APP_ID,
     INSTAGRAM_APP_SECRET,
@@ -52,7 +50,7 @@ InstafeedsHelpers.getInstagramAccessToken = async(userCode) => {
    
   };
 
-  InstafeedsHelpers.getInstagramMedia = () => {
+  InstafeedsHelpers.getInstagramMedia = (data) => {
 
     try{
   
@@ -106,6 +104,6 @@ InstafeedsHelpers.getInstagramAccessToken = async(userCode) => {
   
   };
 
-export default InstafeedsHelpers;
+module.exports = InstafeedsHelpers;
 
 
