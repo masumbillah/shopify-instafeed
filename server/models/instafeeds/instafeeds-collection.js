@@ -1,11 +1,19 @@
 const mongoose = require("mongoose");
-import InstafeedSchema from "./instafeeds-schema";
+const InstafeedSchema = require("./instafeeds-schema");
 
 const InstafeedsCollection = mongoose.model("instafeeds", InstafeedSchema);
 
+console.log("01.5555", InstafeedsCollection);
 
-InstafeedsCollection.after.insert = function (doc){
-    console.log("insert after hooks", doc);
-}
+InstafeedSchema.pre('save', function(doc, next) {
+    console.log('Pre', doc);
+    doc._id = "asdfasdfasdfasdfasdf"
+    next();
+  });
+
+InstafeedSchema.post('save', function(doc, next) {
+    console.log('post2', doc);
+    next();
+  });
 
 module.exports = InstafeedsCollection;

@@ -1,6 +1,8 @@
 const dotenv = require('dotenv');
 const InstafeedsHelpers = require("../models/instafeeds/instafeeds-helpers");
 
+const InstafeedsCollection = require("../models/instafeeds/instafeeds-collection");
+
 dotenv.config();
 
 const { HOST } = process.env;
@@ -27,13 +29,14 @@ const Routers = (router) => {
     try {
       let userCode = InstafeedsHelpers.getUserCode(ctx),
           accessTokenData = await InstafeedsHelpers.getInstagramAccessToken(userCode),
-          mediaList = await InstafeedsHelpers.getInstagramMedia(accessTokenData);
+          mediaList = await InstafeedsHelpers.getInstagramMedia(accessTokenData),
+          mediaListData = mediaList && mediaList.data;
   
-      let isFound = instagramUsers.find(element => element.id === userInfo.id);
-
-     instagramMediaList.push(mediaList);
-  
-      console.log("instagramMediaList", instagramMediaList);
+          mediaListData.forEach( mediaInfo => {
+            
+            mediaInfo = {...mediaInfo, storeId: "12345"}
+            InstafeedsCollection.create(mediaInfo);
+          });
   
     ctx.redirect(`${HOST}/instafeed`);
       
@@ -47,7 +50,7 @@ const Routers = (router) => {
   
       ctx.body = {
         status: 'success',
-        data: instagramUsers
+        data: []
       }
     } catch (error) {
       console.log(error)
