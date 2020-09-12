@@ -1,15 +1,13 @@
 const dotenv = require('dotenv');
-const InstafeedsHelpers = require("../models/instafeeds/instafeeds-helpers");
+const InstafeedsHelpers = require("../models/instafeeds/instafeed-media-helpers");
 
-const InstafeedsCollection = require("../models/instafeeds/instafeeds-collection");
+const InstafeedsCollection = require("../models/instafeeds/instafeed-media-collection");
 
 dotenv.config();
 
 const { HOST } = process.env;
 
 const Routers = (router) => {
-
-  let instagramMediaList = [];
 
   router.get('/index-token', async (ctx, res) => {
     let instance = this;
@@ -60,9 +58,13 @@ const Routers = (router) => {
   router.get('/api/instagram-media', async (ctx, req, res) => {
     try {
   
+      let mediaList = await InstafeedsCollection.find({}) || [];
+
+      console.log("mediaList",mediaList);
+
       ctx.body = {
         status: 'success',
-        data: instagramMediaList
+        data: mediaList
       }
     } catch (error) {
       console.log(error)

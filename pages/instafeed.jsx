@@ -81,7 +81,7 @@ const MediaList = ({mediaProps}) => {
 
 let list = "";
 
-if(mediaList.length) list = mediaList.map((mediaInfo, index) => <div key={mediaInfo.id+"_"+index} style={{marginRight: 25}}> <a href={mediaInfo.media_url} target="_blank" > <img src={mediaInfo.media_url} title={mediaInfo.caption} style={{width:200, marginTop: 25}} /></a> <br/>  <hr/> <p>{mediaInfo.caption}</p> </div> );
+if( mediaList && mediaList.length) list = mediaList.map((mediaInfo, index) => <div key={mediaInfo.id+"_"+index} style={{marginRight: 25}}> <a href={mediaInfo.media_url} target="_blank" > <img src={mediaInfo.media_url} title={mediaInfo.caption} style={{width:200, marginTop: 25}} /></a> <br/>  <hr/> <p>{mediaInfo.caption}</p> </div> );
 
 return <React.Fragment> <Heading> {list.length? `Instafeed Media list`:""} </Heading> <div style={{display: 'flex'}}>{list}</div></React.Fragment>; 
 

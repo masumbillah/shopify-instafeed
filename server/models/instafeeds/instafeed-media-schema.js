@@ -39,4 +39,15 @@ const InstafeedSchema = new Schema({
     },
 });
 
+InstafeedSchema.pre('save', ()=> {
+  console.log('Pre data');
+
+});
+
+
+InstafeedSchema.post('save', (doc)=> {
+  console.log("Post data", doc._id);
+  
+});
+
 module.exports = InstafeedSchema;
